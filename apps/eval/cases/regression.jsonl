@@ -1,3 +1,3 @@
 {"mode":"reviewer","user_input":"이 문장이 너무 공격적인지 점검해줘: 'You must do it now.'","goal":"스크립트 리뷰","tone":"neutral","length":"short"}
-{"mode":"builder","user_input":"영어회화앱 MVP를 4주 로드맵으로 설계해줘. 3탭 구조(스크립트/단어/문화).","goal":"새 앱 기획","tone":"professional","length":"medium"}
+{"mode":"builder","user_input":"영어회화앱 MVP를 설계해줘. 추상적인 기획 문구 말고 실제 화면, 입력값, 출력값, 운영지표 기준으로 작성해줘. 3탭 구조(스크립트/단어/문화).","goal":"새 앱 기획","tone":"professional","length":"medium"}
 {"mode":"builder","user_input":"사내 전용 회의록 요약 에이전트 MVP를 설계해줘.","goal":"내부 생산성","tone":"professional","length":"medium","data_classification":"restricted"}

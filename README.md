@@ -1,8 +1,8 @@
 # BaseCore
 
-Version: `v0.1.0`
+Version: `v0.2.0`
 
-BaseCore is an internal AI execution layer for structured product work. v0.1 focuses on reliable JSON outputs for three modes:
+BaseCore is an internal AI execution layer for structured product work. v0.2 focuses on reliable JSON outputs for three modes:
 
 - `builder`
 - `writer`
@@ -13,13 +13,14 @@ The system is designed to run with two tracks:
 - Internal open-weight model served through vLLM
 - External provider fallback for tasks that need higher quality or fail internal validation
 
-## v0.1 Scope
+## v0.2 Scope
 
 - Route requests between internal and external providers
 - Enforce strict JSON schema outputs
 - Validate and rewrite until output passes or attempts are exhausted
 - Log execution metadata for evaluation and future dataset curation
 - Run smoke/regression/adversarial eval cases
+- Produce builder outputs as execution-ready specs rather than generic product briefs
 
 ## Layout
 

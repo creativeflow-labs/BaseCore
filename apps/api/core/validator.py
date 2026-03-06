@@ -20,6 +20,11 @@ def validate_output(mode: str, data: dict):
 
 
 def semantic_checks(mode: str, obj) -> str | None:
+    if mode == "builder":
+        if len(obj.primary_user_segment.split()) > 12:
+            return "BUILDER_PRIMARY_USER_SEGMENT_TOO_BROAD"
+        if any("이상" in metric.name for metric in obj.operational_metrics):
+            return "BUILDER_METRIC_NAME_CONTAINS_TARGET_TEXT"
     if mode == "writer":
         if any(not variant.text.strip() for variant in obj.variants):
             return "WRITER_VARIANT_TEXT_EMPTY"

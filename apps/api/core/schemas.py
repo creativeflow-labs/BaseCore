@@ -18,24 +18,71 @@ class GenerateRequest(BaseModel):
     length: str | None = None
     data_classification: DataClassification = "internal"
     preferred_model_source: ModelSource | None = None
-    prompt_version: str = "v0.1"
-    schema_version: str = "v0.1"
+    prompt_version: str = "v0.2"
+    schema_version: str = "v0.2"
+
+class BuilderFlowStep(BaseModel):
+    step: str
+    user_action: str
+    system_response: str
+
+
+class BuilderScreen(BaseModel):
+    name: str
+    purpose: str
+    inputs: list[str]
+    outputs: list[str]
+
+    @field_validator("inputs", "outputs")
+    @classmethod
+    def require_non_empty_screen_fields(cls, value: list[str]) -> list[str]:
+        if not value:
+            raise ValueError("field must not be empty")
+        return value
+
+
+class BuilderSystemAction(BaseModel):
+    trigger: str
+    action: str
+    output: str
+
+
+class BuilderMetric(BaseModel):
+    name: str
+    measurement_method: str
+    signal: str
+
+
+class BuilderAcceptanceCriterion(BaseModel):
+    scenario: str
+    expected_result: str
 
 
 class BuilderOutput(BaseModel):
     product_one_liner: str
-    target_user: str
-    core_loop_steps: list[str]
+    primary_user_segment: str
+    user_pain_points: list[str]
+    user_flow_steps: list[BuilderFlowStep]
+    screens: list[BuilderScreen]
+    system_actions: list[BuilderSystemAction]
     mvp_in_scope: list[str]
     mvp_out_scope: list[str]
+    operational_metrics: list[BuilderMetric]
+    acceptance_criteria: list[BuilderAcceptanceCriterion]
     risks: list[str]
-    success_metrics: list[str]
-    test_cases: list[str]
-    validators: list[str]
 
-    @field_validator("core_loop_steps", "mvp_in_scope", "risks", "success_metrics")
+    @field_validator(
+        "user_pain_points",
+        "user_flow_steps",
+        "screens",
+        "system_actions",
+        "mvp_in_scope",
+        "operational_metrics",
+        "acceptance_criteria",
+        "risks",
+    )
     @classmethod
-    def require_non_empty_lists(cls, value: list[str]) -> list[str]:
+    def require_non_empty_lists(cls, value: list) -> list:
         if not value:
             raise ValueError("field must not be empty")
         return value

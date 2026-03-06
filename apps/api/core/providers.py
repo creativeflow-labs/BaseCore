@@ -103,14 +103,60 @@ def _mock_chat_completion(messages: list[dict[str, str]]) -> _MockResponse:
         content = json.dumps(
             {
                 "product_one_liner": f"Mock BaseCore plan for {user_input[:40] or 'task'}",
-                "target_user": "Internal product operator",
-                "core_loop_steps": ["receive request", "produce structured plan", "validate output"],
+                "primary_user_segment": "Operations lead at a service business",
+                "user_pain_points": [
+                    "manual onboarding qualification takes too long",
+                    "proposal handoff quality is inconsistent",
+                ],
+                "user_flow_steps": [
+                    {
+                        "step": "landing",
+                        "user_action": "submit onboarding request",
+                        "system_response": "capture company context and inquiry",
+                    },
+                    {
+                        "step": "qualification",
+                        "user_action": "answer follow-up questions",
+                        "system_response": "classify need and prepare next action",
+                    },
+                ],
+                "screens": [
+                    {
+                        "name": "intake_form",
+                        "purpose": "collect company context",
+                        "inputs": ["company_name", "contact_name", "pain_point_summary"],
+                        "outputs": ["saved lead record", "qualification status"],
+                    },
+                    {
+                        "name": "proposal_summary",
+                        "purpose": "show matched proposal direction",
+                        "inputs": ["qualification status", "service category"],
+                        "outputs": ["proposal summary", "handoff payload"],
+                    },
+                ],
+                "system_actions": [
+                    {
+                        "trigger": "intake form submitted",
+                        "action": "store lead and classify inquiry type",
+                        "output": "qualified lead payload",
+                    }
+                ],
                 "mvp_in_scope": ["structured JSON output", "basic validation", "logging"],
                 "mvp_out_scope": ["fine-tuning pipeline", "advanced agent memory"],
+                "operational_metrics": [
+                    {
+                        "name": "intake completion rate",
+                        "measurement_method": "submitted intake forms / started sessions",
+                        "signal": "drop-off between landing and submit",
+                    }
+                ],
+                "acceptance_criteria": [
+                    {
+                        "scenario": "required onboarding fields are submitted",
+                        "expected_result": "a qualified lead record is created with non-empty summary",
+                    }
+                ],
                 "risks": ["mock provider is not quality representative"],
-                "success_metrics": ["schema pass rate", "fallback rate"],
-                "test_cases": ["valid builder response", "non-empty scope fields"],
-                "validators": ["JSON schema passes", "required arrays are populated"],
             },
             ensure_ascii=False,
         )

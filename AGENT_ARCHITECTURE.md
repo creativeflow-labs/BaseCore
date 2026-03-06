@@ -1,8 +1,8 @@
-# BaseCore v0.1 Updated Architecture
+# BaseCore v0.2 Updated Architecture
 
 ## Positioning
 
-BaseCore v0.1 is not a proprietary foundation model. It is an internal AI execution platform that reduces dependence on external APIs by combining:
+BaseCore v0.2 is not a proprietary foundation model. It is an internal AI execution platform that reduces dependence on external APIs by combining:
 
 - Internal open-weight inference
 - External provider fallback
@@ -14,11 +14,12 @@ The external path can use OpenAI-compatible APIs directly, with OpenAI as the de
 
 ## Product Goal
 
-v0.1 focuses on operational discipline, not raw model quality.
+v0.2 focuses on operational discipline, not raw model quality.
 
 1. Support `builder`, `writer`, `reviewer`
 2. Return parseable JSON that matches strict schema
-3. Route between internal and external providers with validation-driven fallback
+3. Make `builder` outputs execution-ready with structured flow, screen, and operational fields
+4. Route between internal and external providers with validation-driven fallback
 
 ## Architecture
 

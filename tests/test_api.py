@@ -33,14 +33,17 @@ def test_health() -> None:
 def test_generate_builder_with_mocked_provider() -> None:
     client = TestClient(app)
     content = (
-        '{"product_one_liner":"AI 영어회화 MVP","target_user":"초급 영어 학습자",'
-        '"core_loop_steps":["스크립트 학습","단어 복습","문화 팁 확인"],'
+        '{"product_one_liner":"AI 영어회화 MVP","primary_user_segment":"초급 영어 학습자",'
+        '"user_pain_points":["말하기 시작이 어렵다"],'
+        '"user_flow_steps":[{"step":"start","user_action":"학습 시작","system_response":"스크립트 추천"}],'
+        '"screens":[{"name":"script_tab","purpose":"대화 스크립트 학습","inputs":["level"],"outputs":["script_list"]}],'
+        '"system_actions":[{"trigger":"학습 시작","action":"레벨별 스크립트 조회","output":"추천 스크립트"}],'
         '"mvp_in_scope":["스크립트 탭","단어 탭","문화 탭"],'
         '"mvp_out_scope":["실시간 음성 평가"],'
-        '"risks":["콘텐츠 품질 편차"],'
-        '"success_metrics":["주간 재방문율"],'
-        '"test_cases":["탭 이동 가능"],'
-        '"validators":["필수 3탭 존재"]}'
+        '"operational_metrics":[{"name":"주간 재방문율","measurement_method":"7일 내 재방문 사용자 / 전체 사용자","signal":"학습 지속성"}],'
+        '"acceptance_criteria":[{"scenario":"사용자가 레벨을 선택한다","expected_result":"적절한 스크립트 목록이 표시된다"}],'
+        '"risks":["콘텐츠 품질 편차"]'
+        '}'
     )
 
     with patch("apps.api.core.rewrite_loop.chat_completion", return_value=_Response(content)):
@@ -146,14 +149,17 @@ def test_generate_falls_back_to_external_after_internal_failure() -> None:
 
     invalid_internal = _Response("not json")
     valid_external = _Response(
-        '{"product_one_liner":"외부 폴백 성공","target_user":"초급 영어 학습자",'
-        '"core_loop_steps":["스크립트 학습"],'
+        '{"product_one_liner":"외부 폴백 성공","primary_user_segment":"초급 영어 학습자",'
+        '"user_pain_points":["빠른 학습 시작이 어렵다"],'
+        '"user_flow_steps":[{"step":"start","user_action":"학습 시작","system_response":"스크립트 추천"}],'
+        '"screens":[{"name":"script_tab","purpose":"스크립트 학습","inputs":["level"],"outputs":["script_list"]}],'
+        '"system_actions":[{"trigger":"학습 시작","action":"스크립트 조회","output":"추천 스크립트"}],'
         '"mvp_in_scope":["스크립트 탭"],'
         '"mvp_out_scope":["실시간 음성 평가"],'
-        '"risks":["콘텐츠 품질 편차"],'
-        '"success_metrics":["주간 재방문율"],'
-        '"test_cases":["탭 이동 가능"],'
-        '"validators":["필수 3탭 존재"]}'
+        '"operational_metrics":[{"name":"주간 재방문율","measurement_method":"7일 내 재방문 사용자 / 전체 사용자","signal":"학습 지속성"}],'
+        '"acceptance_criteria":[{"scenario":"사용자가 학습 시작","expected_result":"스크립트가 표시된다"}],'
+        '"risks":["콘텐츠 품질 편차"]'
+        '}'
     )
 
     app.dependency_overrides[get_settings] = override_settings
@@ -197,14 +203,17 @@ def test_generate_falls_back_to_external_after_internal_provider_error() -> None
         return settings
 
     valid_external = _Response(
-        '{"product_one_liner":"외부 폴백 성공","target_user":"초급 영어 학습자",'
-        '"core_loop_steps":["스크립트 학습"],'
+        '{"product_one_liner":"외부 폴백 성공","primary_user_segment":"초급 영어 학습자",'
+        '"user_pain_points":["빠른 학습 시작이 어렵다"],'
+        '"user_flow_steps":[{"step":"start","user_action":"학습 시작","system_response":"스크립트 추천"}],'
+        '"screens":[{"name":"script_tab","purpose":"스크립트 학습","inputs":["level"],"outputs":["script_list"]}],'
+        '"system_actions":[{"trigger":"학습 시작","action":"스크립트 조회","output":"추천 스크립트"}],'
         '"mvp_in_scope":["스크립트 탭"],'
         '"mvp_out_scope":["실시간 음성 평가"],'
-        '"risks":["콘텐츠 품질 편차"],'
-        '"success_metrics":["주간 재방문율"],'
-        '"test_cases":["탭 이동 가능"],'
-        '"validators":["필수 3탭 존재"]}'
+        '"operational_metrics":[{"name":"주간 재방문율","measurement_method":"7일 내 재방문 사용자 / 전체 사용자","signal":"학습 지속성"}],'
+        '"acceptance_criteria":[{"scenario":"사용자가 학습 시작","expected_result":"스크립트가 표시된다"}],'
+        '"risks":["콘텐츠 품질 편차"]'
+        '}'
     )
 
     app.dependency_overrides[get_settings] = override_settings

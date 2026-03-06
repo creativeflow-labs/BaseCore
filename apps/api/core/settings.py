@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     app_env: str = "local"
-    app_name: str = "BaseCore v0.1"
+    app_name: str = "BaseCore v0.2"
     log_dir: Path = Path("data/logs")
     enable_auth: bool = False
     service_api_key: str | None = None
