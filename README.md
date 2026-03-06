@@ -135,3 +135,8 @@ Internal and external comparison:
 3. Add external fallback and policy routing.
 4. Accumulate approved outputs and eval results.
 5. Use curated data for later LoRA or SFT.
+
+## Contributors
+
+- Sue: product direction, brand strategy, and BaseCore roadmap
+- OpenAI Codex: initial architecture, API scaffold, routing, eval, and release automation groundwork
